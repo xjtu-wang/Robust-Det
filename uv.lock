@@ -2,8 +2,10 @@ version = 1
 revision = 3
 requires-python = ">=3.10"
 resolution-markers = [
-    "python_full_version >= '3.12' and sys_platform == 'linux'",
-    "python_full_version >= '3.12' and sys_platform != 'linux'",
+    "python_full_version >= '3.13' and sys_platform == 'linux'",
+    "python_full_version == '3.12.*' and sys_platform == 'linux'",
+    "python_full_version >= '3.13' and sys_platform != 'linux'",
+    "python_full_version == '3.12.*' and sys_platform != 'linux'",
     "python_full_version == '3.11.*' and sys_platform == 'linux'",
     "python_full_version == '3.11.*' and sys_platform != 'linux'",
     "python_full_version < '3.11' and sys_platform == 'linux'",
@@ -191,6 +193,15 @@ dependencies = [
     { name = "beautifulsoup4" },
 ]
 sdist = { url = "https://mirrors.xjtu.edu.cn/pypi/packages/bs4/0.0.1/bs4-0.0.1.tar.gz", hash = "sha256:36ecea1fd7cc5c0c6e4a1ff075df26d50da647b75376626cc186e2212886dd3a" }
+
+[[package]]
+name = "cachetools"
+version = "6.2.2"
+source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }
+sdist = { url = "https://mirrors.xjtu.edu.cn/pypi/packages/cachetools/6.2.2/cachetools-6.2.2.tar.gz", hash = "sha256:8e6d266b25e539df852251cfd6f990b4bc3a141db73b939058d809ebd2590fc6" }
+wheels = [
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/cachetools/6.2.2/cachetools-6.2.2-py3-none-any.whl", hash = "sha256:6c09c98183bf58560c97b2abfcedcbaf6a896a490f534b031b661d3723b45ace" },
+]
 
 [[package]]
 name = "certifi"
@@ -1063,7 +1074,8 @@ dependencies = [
     { name = "anyio" },
     { name = "distro" },
     { name = "httpx" },
-    { name = "pydantic" },
+    { name = "pydantic", version = "2.7.4", source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }, marker = "python_full_version >= '3.13'" },
+    { name = "pydantic", version = "2.9.2", source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }, marker = "python_full_version < '3.13'" },
     { name = "sniffio" },
     { name = "tqdm" },
     { name = "typing-extensions" },
@@ -1245,73 +1257,178 @@ wheels = [
 
 [[package]]
 name = "pydantic"
-version = "2.5.2"
+version = "2.7.4"
 source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }
-dependencies = [
-    { name = "annotated-types" },
-    { name = "pydantic-core" },
-    { name = "typing-extensions" },
+resolution-markers = [
+    "python_full_version >= '3.13' and sys_platform == 'linux'",
+    "python_full_version >= '3.13' and sys_platform != 'linux'",
 ]
-sdist = { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic/2.5.2/pydantic-2.5.2.tar.gz", hash = "sha256:ff177ba64c6faf73d7afa2e8cad38fd456c0dbe01c9954e71038001cd15a6edd" }
+dependencies = [
+    { name = "annotated-types", marker = "python_full_version >= '3.13'" },
+    { name = "pydantic-core", version = "2.18.4", source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }, marker = "python_full_version >= '3.13'" },
+    { name = "typing-extensions", marker = "python_full_version >= '3.13'" },
+]
+sdist = { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic/2.7.4/pydantic-2.7.4.tar.gz", hash = "sha256:0c84efd9548d545f63ac0060c1e4d39bb9b14db8b3c0652338aecc07b5adec52" }
 wheels = [
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic/2.5.2/pydantic-2.5.2-py3-none-any.whl", hash = "sha256:80c50fb8e3dcecfddae1adbcc00ec5822918490c99ab31f6cf6140ca1c1429f0" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic/2.7.4/pydantic-2.7.4-py3-none-any.whl", hash = "sha256:ee8538d41ccb9c0a9ad3e0e5f07bf15ed8015b481ced539a1759d8cc89ae90d0" },
+]
+
+[[package]]
+name = "pydantic"
+version = "2.9.2"
+source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }
+resolution-markers = [
+    "python_full_version == '3.12.*' and sys_platform == 'linux'",
+    "python_full_version == '3.12.*' and sys_platform != 'linux'",
+    "python_full_version == '3.11.*' and sys_platform == 'linux'",
+    "python_full_version == '3.11.*' and sys_platform != 'linux'",
+    "python_full_version < '3.11' and sys_platform == 'linux'",
+    "python_full_version < '3.11' and sys_platform != 'linux'",
+]
+dependencies = [
+    { name = "annotated-types", marker = "python_full_version < '3.13'" },
+    { name = "pydantic-core", version = "2.23.4", source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }, marker = "python_full_version < '3.13'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+]
+sdist = { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic/2.9.2/pydantic-2.9.2.tar.gz", hash = "sha256:d155cef71265d1e9807ed1c32b4c8deec042a44a50a4188b25ac67ecd81a9c0f" }
+wheels = [
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic/2.9.2/pydantic-2.9.2-py3-none-any.whl", hash = "sha256:f048cec7b26778210e28a0459867920654d48e5e62db0958433636cde4254f12" },
 ]
 
 [[package]]
 name = "pydantic-core"
-version = "2.14.5"
+version = "2.18.4"
 source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }
-dependencies = [
-    { name = "typing-extensions" },
+resolution-markers = [
+    "python_full_version >= '3.13' and sys_platform == 'linux'",
+    "python_full_version >= '3.13' and sys_platform != 'linux'",
 ]
-sdist = { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5.tar.gz", hash = "sha256:6d30226dfc816dd0fdf120cae611dd2215117e4f9b124af8c60ab9093b6e8e71" }
+dependencies = [
+    { name = "typing-extensions", marker = "python_full_version >= '3.13'" },
+]
+sdist = { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4.tar.gz", hash = "sha256:ec3beeada09ff865c344ff3bc2f427f5e6c26401cc6113d77e372c3fdac73864" }
 wheels = [
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp310-cp310-macosx_10_7_x86_64.whl", hash = "sha256:7e88f5696153dc516ba6e79f82cc4747e87027205f0e02390c21f7cb3bd8abfd" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:4641e8ad4efb697f38a9b64ca0523b557c7931c5f84e0fd377a9a3b05121f0de" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:774de879d212db5ce02dfbf5b0da9a0ea386aeba12b0b95674a4ce0593df3d07" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp310-cp310-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:ebb4e035e28f49b6f1a7032920bb9a0c064aedbbabe52c543343d39341a5b2a3" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp310-cp310-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:b53e9ad053cd064f7e473a5f29b37fc4cc9dc6d35f341e6afc0155ea257fc911" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp310-cp310-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:8aa1768c151cf562a9992462239dfc356b3d1037cc5a3ac829bb7f3bda7cc1f9" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:eac5c82fc632c599f4639a5886f96867ffced74458c7db61bc9a66ccb8ee3113" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:d2ae91f50ccc5810b2f1b6b858257c9ad2e08da70bf890dee02de1775a387c66" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp310-cp310-musllinux_1_1_aarch64.whl", hash = "sha256:6b9ff467ffbab9110e80e8c8de3bcfce8e8b0fd5661ac44a09ae5901668ba997" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:61ea96a78378e3bd5a0be99b0e5ed00057b71f66115f5404d0dae4819f495093" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp310-none-win32.whl", hash = "sha256:bb4c2eda937a5e74c38a41b33d8c77220380a388d689bcdb9b187cf6224c9720" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp310-none-win_amd64.whl", hash = "sha256:b7851992faf25eac90bfcb7bfd19e1f5ffa00afd57daec8a0042e63c74a4551b" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp311-cp311-macosx_10_7_x86_64.whl", hash = "sha256:4e40f2bd0d57dac3feb3a3aed50f17d83436c9e6b09b16af271b6230a2915459" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:ab1cdb0f14dc161ebc268c09db04d2c9e6f70027f3b42446fa11c153521c0e88" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:aae7ea3a1c5bb40c93cad361b3e869b180ac174656120c42b9fadebf685d121b" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp311-cp311-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:60b7607753ba62cf0739177913b858140f11b8af72f22860c28eabb2f0a61937" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp311-cp311-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:2248485b0322c75aee7565d95ad0e16f1c67403a470d02f94da7344184be770f" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp311-cp311-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:823fcc638f67035137a5cd3f1584a4542d35a951c3cc68c6ead1df7dac825c26" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:96581cfefa9123accc465a5fd0cc833ac4d75d55cc30b633b402e00e7ced00a6" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp311-cp311-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:a33324437018bf6ba1bb0f921788788641439e0ed654b233285b9c69704c27b4" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp311-cp311-musllinux_1_1_aarch64.whl", hash = "sha256:9bd18fee0923ca10f9a3ff67d4851c9d3e22b7bc63d1eddc12f439f436f2aada" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:853a2295c00f1d4429db4c0fb9475958543ee80cfd310814b5c0ef502de24dda" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp311-none-win32.whl", hash = "sha256:cb774298da62aea5c80a89bd58c40205ab4c2abf4834453b5de207d59d2e1651" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp311-none-win_amd64.whl", hash = "sha256:e87fc540c6cac7f29ede02e0f989d4233f88ad439c5cdee56f693cc9c1c78077" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp311-none-win_arm64.whl", hash = "sha256:57d52fa717ff445cb0a5ab5237db502e6be50809b43a596fb569630c665abddf" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp312-cp312-macosx_10_7_x86_64.whl", hash = "sha256:e60f112ac88db9261ad3a52032ea46388378034f3279c643499edb982536a093" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:6e227c40c02fd873c2a73a98c1280c10315cbebe26734c196ef4514776120aeb" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:f0cbc7fff06a90bbd875cc201f94ef0ee3929dfbd5c55a06674b60857b8b85ed" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp312-cp312-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:103ef8d5b58596a731b690112819501ba1db7a36f4ee99f7892c40da02c3e189" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp312-cp312-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:c949f04ecad823f81b1ba94e7d189d9dfb81edbb94ed3f8acfce41e682e48cef" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp312-cp312-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:c1452a1acdf914d194159439eb21e56b89aa903f2e1c65c60b9d874f9b950e5d" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:cb4679d4c2b089e5ef89756bc73e1926745e995d76e11925e3e96a76d5fa51fc" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp312-cp312-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:cf9d3fe53b1ee360e2421be95e62ca9b3296bf3f2fb2d3b83ca49ad3f925835e" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp312-cp312-musllinux_1_1_aarch64.whl", hash = "sha256:70f4b4851dbb500129681d04cc955be2a90b2248d69273a787dda120d5cf1f69" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:59986de5710ad9613ff61dd9b02bdd2f615f1a7052304b79cc8fa2eb4e336d2d" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp312-none-win32.whl", hash = "sha256:699156034181e2ce106c89ddb4b6504c30db8caa86e0c30de47b3e0654543260" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp312-none-win_amd64.whl", hash = "sha256:5baab5455c7a538ac7e8bf1feec4278a66436197592a9bed538160a2e7d11e36" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-cp312-none-win_arm64.whl", hash = "sha256:e47e9a08bcc04d20975b6434cc50bf82665fbc751bcce739d04a3120428f3e27" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-pp310-pypy310_pp73-macosx_10_7_x86_64.whl", hash = "sha256:79e0a2cdbdc7af3f4aee3210b1172ab53d7ddb6a2d8c24119b5706e622b346d0" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-pp310-pypy310_pp73-macosx_11_0_arm64.whl", hash = "sha256:678265f7b14e138d9a541ddabbe033012a2953315739f8cfa6d754cc8063e8ca" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-pp310-pypy310_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:95b15e855ae44f0c6341ceb74df61b606e11f1087e87dcb7482377374aac6abe" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-pp310-pypy310_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:09b0e985fbaf13e6b06a56d21694d12ebca6ce5414b9211edf6f17738d82b0f8" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-pp310-pypy310_pp73-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:3ad873900297bb36e4b6b3f7029d88ff9829ecdc15d5cf20161775ce12306f8a" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-pp310-pypy310_pp73-musllinux_1_1_aarch64.whl", hash = "sha256:2d0ae0d8670164e10accbeb31d5ad45adb71292032d0fdb9079912907f0085f4" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-pp310-pypy310_pp73-musllinux_1_1_x86_64.whl", hash = "sha256:d37f8ec982ead9ba0a22a996129594938138a1503237b87318392a48882d50b7" },
-    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.14.5/pydantic_core-2.14.5-pp310-pypy310_pp73-win_amd64.whl", hash = "sha256:35613015f0ba7e14c29ac6c2483a657ec740e5ac5758d993fdd5870b07a61d8b" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp310-cp310-macosx_10_12_x86_64.whl", hash = "sha256:f76d0ad001edd426b92233d45c746fd08f467d56100fd8f30e9ace4b005266e4" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:59ff3e89f4eaf14050c8022011862df275b552caef8082e37b542b066ce1ff26" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:a55b5b16c839df1070bc113c1f7f94a0af4433fcfa1b41799ce7606e5c79ce0a" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp310-cp310-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:4d0dcc59664fcb8974b356fe0a18a672d6d7cf9f54746c05f43275fc48636851" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp310-cp310-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:8951eee36c57cd128f779e641e21eb40bc5073eb28b2d23f33eb0ef14ffb3f5d" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp310-cp310-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:4701b19f7e3a06ea655513f7938de6f108123bf7c86bbebb1196eb9bd35cf724" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e00a3f196329e08e43d99b79b286d60ce46bed10f2280d25a1718399457e06be" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:97736815b9cc893b2b7f663628e63f436018b75f44854c8027040e05230eeddb" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp310-cp310-musllinux_1_1_aarch64.whl", hash = "sha256:6891a2ae0e8692679c07728819b6e2b822fb30ca7445f67bbf6509b25a96332c" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:bc4ff9805858bd54d1a20efff925ccd89c9d2e7cf4986144b30802bf78091c3e" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp310-none-win32.whl", hash = "sha256:1b4de2e51bbcb61fdebd0ab86ef28062704f62c82bbf4addc4e37fa4b00b7cbc" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp310-none-win_amd64.whl", hash = "sha256:6a750aec7bf431517a9fd78cb93c97b9b0c496090fee84a47a0d23668976b4b0" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp311-cp311-macosx_10_12_x86_64.whl", hash = "sha256:942ba11e7dfb66dc70f9ae66b33452f51ac7bb90676da39a7345e99ffb55402d" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:b2ebef0e0b4454320274f5e83a41844c63438fdc874ea40a8b5b4ecb7693f1c4" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:a642295cd0c8df1b86fc3dced1d067874c353a188dc8e0f744626d49e9aa51c4" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp311-cp311-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:5f09baa656c904807e832cf9cce799c6460c450c4ad80803517032da0cd062e2" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp311-cp311-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:98906207f29bc2c459ff64fa007afd10a8c8ac080f7e4d5beff4c97086a3dabd" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp311-cp311-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:19894b95aacfa98e7cb093cd7881a0c76f55731efad31073db4521e2b6ff5b7d" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0fbbdc827fe5e42e4d196c746b890b3d72876bdbf160b0eafe9f0334525119c8" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp311-cp311-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:f85d05aa0918283cf29a30b547b4df2fbb56b45b135f9e35b6807cb28bc47951" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp311-cp311-musllinux_1_1_aarch64.whl", hash = "sha256:e85637bc8fe81ddb73fda9e56bab24560bdddfa98aa64f87aaa4e4b6730c23d2" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:2f5966897e5461f818e136b8451d0551a2e77259eb0f73a837027b47dc95dab9" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp311-none-win32.whl", hash = "sha256:44c7486a4228413c317952e9d89598bcdfb06399735e49e0f8df643e1ccd0558" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp311-none-win_amd64.whl", hash = "sha256:8a7164fe2005d03c64fd3b85649891cd4953a8de53107940bf272500ba8a788b" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp311-none-win_arm64.whl", hash = "sha256:4e99bc050fe65c450344421017f98298a97cefc18c53bb2f7b3531eb39bc7805" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp312-cp312-macosx_10_12_x86_64.whl", hash = "sha256:6f5c4d41b2771c730ea1c34e458e781b18cc668d194958e0112455fff4e402b2" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:2fdf2156aa3d017fddf8aea5adfba9f777db1d6022d392b682d2a8329e087cef" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:4748321b5078216070b151d5271ef3e7cc905ab170bbfd27d5c83ee3ec436695" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp312-cp312-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:847a35c4d58721c5dc3dba599878ebbdfd96784f3fb8bb2c356e123bdcd73f34" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp312-cp312-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:3c40d4eaad41f78e3bbda31b89edc46a3f3dc6e171bf0ecf097ff7a0ffff7cb1" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp312-cp312-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:21a5e440dbe315ab9825fcd459b8814bb92b27c974cbc23c3e8baa2b76890077" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:01dd777215e2aa86dfd664daed5957704b769e726626393438f9c87690ce78c3" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp312-cp312-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:4b06beb3b3f1479d32befd1f3079cc47b34fa2da62457cdf6c963393340b56e9" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp312-cp312-musllinux_1_1_aarch64.whl", hash = "sha256:564d7922e4b13a16b98772441879fcdcbe82ff50daa622d681dd682175ea918c" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:0eb2a4f660fcd8e2b1c90ad566db2b98d7f3f4717c64fe0a83e0adb39766d5b8" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp312-none-win32.whl", hash = "sha256:8b8bab4c97248095ae0c4455b5a1cd1cdd96e4e4769306ab19dda135ea4cdb07" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp312-none-win_amd64.whl", hash = "sha256:14601cdb733d741b8958224030e2bfe21a4a881fb3dd6fbb21f071cabd48fa0a" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-cp312-none-win_arm64.whl", hash = "sha256:c1322d7dd74713dcc157a2b7898a564ab091ca6c58302d5c7b4c07296e3fd00f" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-pp310-pypy310_pp73-macosx_10_12_x86_64.whl", hash = "sha256:574d92eac874f7f4db0ca653514d823a0d22e2354359d0759e3f6a406db5d55d" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-pp310-pypy310_pp73-macosx_11_0_arm64.whl", hash = "sha256:1f4d26ceb5eb9eed4af91bebeae4b06c3fb28966ca3a8fb765208cf6b51102ab" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-pp310-pypy310_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:77450e6d20016ec41f43ca4a6c63e9fdde03f0ae3fe90e7c27bdbeaece8b1ed4" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-pp310-pypy310_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:d323a01da91851a4f17bf592faf46149c9169d68430b3146dcba2bb5e5719abc" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-pp310-pypy310_pp73-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:43d447dd2ae072a0065389092a231283f62d960030ecd27565672bd40746c507" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-pp310-pypy310_pp73-musllinux_1_1_aarch64.whl", hash = "sha256:578e24f761f3b425834f297b9935e1ce2e30f51400964ce4801002435a1b41ef" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-pp310-pypy310_pp73-musllinux_1_1_x86_64.whl", hash = "sha256:81b5efb2f126454586d0f40c4d834010979cb80785173d1586df845a632e4e6d" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.18.4/pydantic_core-2.18.4-pp310-pypy310_pp73-win_amd64.whl", hash = "sha256:ab86ce7c8f9bea87b9d12c7f0af71102acbf5ecbc66c17796cff45dae54ef9a5" },
+]
+
+[[package]]
+name = "pydantic-core"
+version = "2.23.4"
+source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }
+resolution-markers = [
+    "python_full_version == '3.12.*' and sys_platform == 'linux'",
+    "python_full_version == '3.12.*' and sys_platform != 'linux'",
+    "python_full_version == '3.11.*' and sys_platform == 'linux'",
+    "python_full_version == '3.11.*' and sys_platform != 'linux'",
+    "python_full_version < '3.11' and sys_platform == 'linux'",
+    "python_full_version < '3.11' and sys_platform != 'linux'",
+]
+dependencies = [
+    { name = "typing-extensions", marker = "python_full_version < '3.13'" },
+]
+sdist = { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4.tar.gz", hash = "sha256:2584f7cf844ac4d970fba483a717dbe10c1c1c96a969bf65d61ffe94df1b2863" }
+wheels = [
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp310-cp310-macosx_10_12_x86_64.whl", hash = "sha256:b10bd51f823d891193d4717448fab065733958bdb6a6b351967bd349d48d5c9b" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:4fc714bdbfb534f94034efaa6eadd74e5b93c8fa6315565a222f7b6f42ca1166" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:63e46b3169866bd62849936de036f901a9356e36376079b05efa83caeaa02ceb" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp310-cp310-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:ed1a53de42fbe34853ba90513cea21673481cd81ed1be739f7f2efb931b24916" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp310-cp310-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:cfdd16ab5e59fc31b5e906d1a3f666571abc367598e3e02c83403acabc092e07" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp310-cp310-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:255a8ef062cbf6674450e668482456abac99a5583bbafb73f9ad469540a3a232" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:4a7cd62e831afe623fbb7aabbb4fe583212115b3ef38a9f6b71869ba644624a2" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:f09e2ff1f17c2b51f2bc76d1cc33da96298f0a036a137f5440ab3ec5360b624f" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp310-cp310-musllinux_1_1_aarch64.whl", hash = "sha256:e38e63e6f3d1cec5a27e0afe90a085af8b6806ee208b33030e65b6516353f1a3" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:0dbd8dbed2085ed23b5c04afa29d8fd2771674223135dc9bc937f3c09284d071" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp310-none-win32.whl", hash = "sha256:6531b7ca5f951d663c339002e91aaebda765ec7d61b7d1e3991051906ddde119" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp310-none-win_amd64.whl", hash = "sha256:7c9129eb40958b3d4500fa2467e6a83356b3b61bfff1b414c7361d9220f9ae8f" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp311-cp311-macosx_10_12_x86_64.whl", hash = "sha256:77733e3892bb0a7fa797826361ce8a9184d25c8dffaec60b7ffe928153680ba8" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:1b84d168f6c48fabd1f2027a3d1bdfe62f92cade1fb273a5d68e621da0e44e6d" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:df49e7a0861a8c36d089c1ed57d308623d60416dab2647a4a17fe050ba85de0e" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp311-cp311-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:ff02b6d461a6de369f07ec15e465a88895f3223eb75073ffea56b84d9331f607" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp311-cp311-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:996a38a83508c54c78a5f41456b0103c30508fed9abcad0a59b876d7398f25fd" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp311-cp311-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:d97683ddee4723ae8c95d1eddac7c192e8c552da0c73a925a89fa8649bf13eea" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:216f9b2d7713eb98cb83c80b9c794de1f6b7e3145eef40400c62e86cee5f4e1e" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp311-cp311-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:6f783e0ec4803c787bcea93e13e9932edab72068f68ecffdf86a99fd5918878b" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp311-cp311-musllinux_1_1_aarch64.whl", hash = "sha256:d0776dea117cf5272382634bd2a5c1b6eb16767c223c6a5317cd3e2a757c61a0" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:d5f7a395a8cf1621939692dba2a6b6a830efa6b3cee787d82c7de1ad2930de64" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp311-none-win32.whl", hash = "sha256:74b9127ffea03643e998e0c5ad9bd3811d3dac8c676e47db17b0ee7c3c3bf35f" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp311-none-win_amd64.whl", hash = "sha256:98d134c954828488b153d88ba1f34e14259284f256180ce659e8d83e9c05eaa3" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp312-cp312-macosx_10_12_x86_64.whl", hash = "sha256:f3e0da4ebaef65158d4dfd7d3678aad692f7666877df0002b8a522cdf088f231" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:f69a8e0b033b747bb3e36a44e7732f0c99f7edd5cea723d45bc0d6e95377ffee" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:723314c1d51722ab28bfcd5240d858512ffd3116449c557a1336cbe3919beb87" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp312-cp312-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:bb2802e667b7051a1bebbfe93684841cc9351004e2badbd6411bf357ab8d5ac8" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp312-cp312-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:d18ca8148bebe1b0a382a27a8ee60350091a6ddaf475fa05ef50dc35b5df6327" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp312-cp312-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:33e3d65a85a2a4a0dc3b092b938a4062b1a05f3a9abde65ea93b233bca0e03f2" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:128585782e5bfa515c590ccee4b727fb76925dd04a98864182b22e89a4e6ed36" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp312-cp312-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:68665f4c17edcceecc112dfed5dbe6f92261fb9d6054b47d01bf6371a6196126" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp312-cp312-musllinux_1_1_aarch64.whl", hash = "sha256:20152074317d9bed6b7a95ade3b7d6054845d70584216160860425f4fbd5ee9e" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:9261d3ce84fa1d38ed649c3638feefeae23d32ba9182963e465d58d62203bd24" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp312-none-win32.whl", hash = "sha256:4ba762ed58e8d68657fc1281e9bb72e1c3e79cc5d464be146e260c541ec12d84" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp312-none-win_amd64.whl", hash = "sha256:97df63000f4fea395b2824da80e169731088656d1818a11b95f3b173747b6cd9" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp313-cp313-macosx_10_12_x86_64.whl", hash = "sha256:7530e201d10d7d14abce4fb54cfe5b94a0aefc87da539d0346a484ead376c3cc" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:df933278128ea1cd77772673c73954e53a1c95a4fdf41eef97c2b779271bd0bd" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp313-cp313-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:0cb3da3fd1b6a5d0279a01877713dbda118a2a4fc6f0d821a57da2e464793f05" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp313-cp313-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:42c6dcb030aefb668a2b7009c85b27f90e51e6a3b4d5c9bc4c57631292015b0d" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp313-cp313-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:696dd8d674d6ce621ab9d45b205df149399e4bb9aa34102c970b721554828510" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp313-cp313-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:2971bb5ffe72cc0f555c13e19b23c85b654dd2a8f7ab493c262071377bfce9f6" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:8394d940e5d400d04cad4f75c0598665cbb81aecefaca82ca85bd28264af7f9b" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp313-cp313-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:0dff76e0602ca7d4cdaacc1ac4c005e0ce0dcfe095d5b5259163a80d3a10d327" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp313-cp313-musllinux_1_1_aarch64.whl", hash = "sha256:7d32706badfe136888bdea71c0def994644e09fff0bfe47441deaed8e96fdbc6" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp313-cp313-musllinux_1_1_x86_64.whl", hash = "sha256:ed541d70698978a20eb63d8c5d72f2cc6d7079d9d90f6b50bad07826f1320f5f" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp313-none-win32.whl", hash = "sha256:3d5639516376dce1940ea36edf408c554475369f5da2abd45d44621cb616f769" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-cp313-none-win_amd64.whl", hash = "sha256:5a1504ad17ba4210df3a045132a7baeeba5a200e930f57512ee02909fc5c4cb5" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-pp310-pypy310_pp73-macosx_10_12_x86_64.whl", hash = "sha256:f455ee30a9d61d3e1a15abd5068827773d6e4dc513e795f380cdd59932c782d5" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-pp310-pypy310_pp73-macosx_11_0_arm64.whl", hash = "sha256:1e90d2e3bd2c3863d48525d297cd143fe541be8bbf6f579504b9712cb6b643ec" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-pp310-pypy310_pp73-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:2e203fdf807ac7e12ab59ca2bfcabb38c7cf0b33c41efeb00f8e5da1d86af480" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-pp310-pypy310_pp73-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:e08277a400de01bc72436a0ccd02bdf596631411f592ad985dcee21445bd0068" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-pp310-pypy310_pp73-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:f220b0eea5965dec25480b6333c788fb72ce5f9129e8759ef876a1d805d00801" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-pp310-pypy310_pp73-musllinux_1_1_aarch64.whl", hash = "sha256:d06b0c8da4f16d1d1e352134427cb194a0a6e19ad5db9161bf32b2113409e728" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-pp310-pypy310_pp73-musllinux_1_1_x86_64.whl", hash = "sha256:ba1a0996f6c2773bd83e63f18914c1de3c9dd26d55f4ac302a7efe93fb8e7433" },
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydantic-core/2.23.4/pydantic_core-2.23.4-pp310-pypy310_pp73-win_amd64.whl", hash = "sha256:9a5bce9d23aac8f0cf0836ecfc033896aa8443b501c58d0602dbfd5bd5b37753" },
 ]
 
 [[package]]
@@ -1327,6 +1444,15 @@ dependencies = [
 sdist = { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydictionary/2.0.1/PyDictionary-2.0.1.tar.gz", hash = "sha256:c250815c238ec042098918764e5b743955df9612a129ae5218d5f37ddd0f9634" }
 wheels = [
     { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pydictionary/2.0.1/PyDictionary-2.0.1-py3-none-any.whl", hash = "sha256:95b91cf26cc9d859f6c76be2a8c0d864819d4826f21f1709619bda02a3b4e1dc" },
+]
+
+[[package]]
+name = "pyjwt"
+version = "2.10.1"
+source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }
+sdist = { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pyjwt/2.10.1/pyjwt-2.10.1.tar.gz", hash = "sha256:3cc5772eb20009233caf06e9d8a0577824723b44e6648ee0a2aedb6cf9381953" }
+wheels = [
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/pyjwt/2.10.1/PyJWT-2.10.1-py3-none-any.whl", hash = "sha256:dcdd193e30abefd5debf142f9adfcdd2b58004e644f25406ffaebd50bd98dacb" },
 ]
 
 [[package]]
@@ -1521,8 +1647,10 @@ dependencies = [
     { name = "pyarrow" },
     { name = "pyarrow-hotfix" },
     { name = "pybind11" },
-    { name = "pydantic" },
-    { name = "pydantic-core" },
+    { name = "pydantic", version = "2.7.4", source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }, marker = "python_full_version >= '3.13'" },
+    { name = "pydantic", version = "2.9.2", source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }, marker = "python_full_version < '3.13'" },
+    { name = "pydantic-core", version = "2.18.4", source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }, marker = "python_full_version >= '3.13'" },
+    { name = "pydantic-core", version = "2.23.4", source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }, marker = "python_full_version < '3.13'" },
     { name = "pydictionary" },
     { name = "pyparsing" },
     { name = "python-dateutil" },
@@ -1556,6 +1684,7 @@ dependencies = [
     { name = "wandb" },
     { name = "xxhash" },
     { name = "yarl" },
+    { name = "zai-sdk" },
     { name = "zipp" },
 ]
 
@@ -1621,8 +1750,8 @@ requires-dist = [
     { name = "pyarrow", specifier = "==14.0.2" },
     { name = "pyarrow-hotfix", specifier = "==0.6" },
     { name = "pybind11", specifier = "==2.11.1" },
-    { name = "pydantic", specifier = "==2.5.2" },
-    { name = "pydantic-core", specifier = "==2.14.5" },
+    { name = "pydantic", specifier = ">=2.5.2" },
+    { name = "pydantic-core", specifier = ">=2.14.6" },
     { name = "pydictionary", specifier = "==2.0.1" },
     { name = "pyparsing", specifier = "==3.1.1" },
     { name = "python-dateutil", specifier = "==2.8.2" },
@@ -1656,6 +1785,7 @@ requires-dist = [
     { name = "wandb", specifier = "==0.16.1" },
     { name = "xxhash", specifier = "==3.4.1" },
     { name = "yarl", specifier = "==1.9.4" },
+    { name = "zai-sdk", specifier = ">=0.0.4.2" },
     { name = "zipp", specifier = "==3.17.0" },
 ]
 
@@ -2290,6 +2420,24 @@ wheels = [
     { url = "https://mirrors.xjtu.edu.cn/pypi/packages/yarl/1.9.4/yarl-1.9.4-cp312-cp312-win32.whl", hash = "sha256:4b21516d181cd77ebd06ce160ef8cc2a5e9ad35fb1c5930882baff5ac865eee7" },
     { url = "https://mirrors.xjtu.edu.cn/pypi/packages/yarl/1.9.4/yarl-1.9.4-cp312-cp312-win_amd64.whl", hash = "sha256:a9bd00dc3bc395a662900f33f74feb3e757429e545d831eef5bb280252631984" },
     { url = "https://mirrors.xjtu.edu.cn/pypi/packages/yarl/1.9.4/yarl-1.9.4-py3-none-any.whl", hash = "sha256:928cecb0ef9d5a7946eb6ff58417ad2fe9375762382f1bf5c55e61645f2c43ad" },
+]
+
+[[package]]
+name = "zai-sdk"
+version = "0.0.4.2"
+source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }
+dependencies = [
+    { name = "cachetools" },
+    { name = "httpx" },
+    { name = "pydantic", version = "2.7.4", source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }, marker = "python_full_version >= '3.13'" },
+    { name = "pydantic", version = "2.9.2", source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }, marker = "python_full_version < '3.13'" },
+    { name = "pydantic-core", version = "2.18.4", source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }, marker = "python_full_version >= '3.13'" },
+    { name = "pydantic-core", version = "2.23.4", source = { registry = "https://mirrors.xjtu.edu.cn/pypi/simple" }, marker = "python_full_version < '3.13'" },
+    { name = "pyjwt" },
+]
+sdist = { url = "https://mirrors.xjtu.edu.cn/pypi/packages/zai-sdk/0.0.4.2/zai_sdk-0.0.4.2.tar.gz", hash = "sha256:544b09d1148e024413455e28ad5ccd0b196423372c78b99b3d62b842970fc78a" }
+wheels = [
+    { url = "https://mirrors.xjtu.edu.cn/pypi/packages/zai-sdk/0.0.4.2/zai_sdk-0.0.4.2-py3-none-any.whl", hash = "sha256:3404c6ee9f721b70ccacedc0908003a800304243ff5383dd5e19bb9f535c836d" },
 ]
 
 [[package]]

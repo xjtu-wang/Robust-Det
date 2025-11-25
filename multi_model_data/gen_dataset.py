@@ -2,6 +2,7 @@ import sys
 import os
 import pandas as pd
 from tqdm import tqdm
+from zai import ZhipuAiClient
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import torch
 torch.backends.cuda.enable_mem_efficient_sdp(False)
@@ -12,7 +13,7 @@ parent_dir = os.path.dirname(current_dir)
 sys.path.append(parent_dir)
 from utils_gen import get_prompt, count_tokens, truncate
 from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_random_exponential
-from openai import OpenAI
+from openai import OpenAI,BadRequestError
 import nltk
 import random
 from repeating_detect import evaluate_text 
@@ -141,7 +142,7 @@ def create_openai_client(args):
     url = args.base_url or os.getenv("OPENAI_BASE_URL")
     if not api_key:
         raise ValueError("No OpenAI API key provided. Use --api_key or set OPENAI_API_KEY env var.")
-    client = OpenAI(base_url=url,api_key=api_key)
+    client = ZhipuAiClient(api_key=api_key)
     return client
 
 def call_openai_model(client, model_name, prompt, top_p, temp):
@@ -149,17 +150,25 @@ def call_openai_model(client, model_name, prompt, top_p, temp):
     统一入口：根据模型类型调用 chat.completions 或 completions
     返回的是“续写的部分”（不包含原 prompt）
     """
-    prompt_text = "Please continue this text in about 90 words: " + prompt.strip()
+    prompt_text = "Please continue this text in about 180 words"+" and avoiding explicit descriptions of violence or hate speech: " + prompt.strip()
 
     if True:  # Use Chat Completions for all models in this script
         # Chat Completions
-        messages = [{"role": "user", "content": prompt_text}]
+        messages = [        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": prompt_text,
+                }
+            ],
+        }]
         response = client.chat.completions.create(
             model=model_name,
             messages=messages,
             top_p=top_p,
             temperature=temp,
-            max_tokens=160,
+            max_tokens=200,
         )
         ans = response.choices[0].message.content
     return ans
@@ -173,14 +182,29 @@ def process_one_row(index, row, client, args, model_name):
         return index, row["sequence"], 0  # Human written texts, no need to generate
 
     seq = row["sequence"]
+
+    # 如果原文太短或者是 NaN，直接跳过这条
+    if not isinstance(seq, str) or len(seq.strip().split()) < 10:
+        return index, "<blank text>", 0
+
     prompt = get_prompt(seq)
 
     decoded_output = "<blank text>"
     rep = 0
 
     for idx in range(MAX_TRIAL):
-        ans = call_openai_model(client, model_name, prompt, args.top_p, args.temp)
-
+        try:
+            ans = call_openai_model(client, model_name, prompt, args.top_p, args.temp)
+        except BadRequestError as e:
+            print(f"[idx {index}] Content blocked by API (BadRequestError): {e}")
+            decoded_output = "<blocked by content filter>"
+            rep = 0
+            break
+        except Exception as e:
+            print(f"[idx {index}] Unexpected error: {e}")
+            decoded_output = "<error>"
+            rep = 0
+            break        
         full_text = prompt.strip() + " " + ans
         if model_name.startswith("gpt-4") or "glm-4" in model_name:
             decoded_output = exp_truncate(full_text, 110)
@@ -190,7 +214,7 @@ def process_one_row(index, row, client, args, model_name):
         token_num = count_tokens(decoded_output)
         print(f"[idx {index}] Attempt {idx}, #token {token_num}: {decoded_output[:80]}...")
 
-        if token_num in range(80,121):   # 举例：随便写了个条件
+        if token_num in range(35,121):   # 举例：随便写了个条件
             break
 
         if idx == MAX_TRIAL - 1:
