@@ -2,6 +2,7 @@ import sys
 import os
 import pandas as pd
 from tqdm import tqdm
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import torch
 torch.backends.cuda.enable_mem_efficient_sdp(False)
 torch.backends.cuda.enable_flash_sdp(False)
@@ -98,6 +99,12 @@ def parse_args():
         default="https://open.bigmodel.cn/api/paas/v4/",
         help="Base URL for OpenAI API.",
     )
+    parser.add_argument(
+        "--max_lines",
+        type=int,
+        default=200,
+        help="Maximum number of parallel requests.",
+    )
     args = parser.parse_args()
     return args
 
@@ -161,6 +168,42 @@ def get_prompt(text, prompt_len=20):
     tokens = nltk.word_tokenize(text)
     return " ".join(tokens[:prompt_len])
 
+def process_one_row(index, row, client, args, model_name):
+    if row["label"] == 1:
+        return index, row["sequence"], 0  # Human written texts, no need to generate
+
+    seq = row["sequence"]
+    prompt = get_prompt(seq)
+
+    decoded_output = "<blank text>"
+    rep = 0
+
+    for idx in range(MAX_TRIAL):
+        ans = call_openai_model(client, model_name, prompt, args.top_p, args.temp)
+
+        full_text = prompt.strip() + " " + ans
+        if model_name.startswith("gpt-4") or "glm-4" in model_name:
+            decoded_output = exp_truncate(full_text, 110)
+        else:
+            decoded_output = truncate(full_text, 110)
+
+        token_num = count_tokens(decoded_output)
+        print(f"[idx {index}] Attempt {idx}, #token {token_num}: {decoded_output[:80]}...")
+
+        if token_num in range(80,121):   # 举例：随便写了个条件
+            break
+
+        if idx == MAX_TRIAL - 1:
+            print(f"[idx {index}] Token num not in range after max trials: {token_num}")
+            decoded_output = "<blank text>"
+
+    # 重复检测
+    rep = evaluate_text(decoded_output)
+    if rep:
+        print(f"[idx {index}] ***Repeating {rep} times***")
+
+    return index, decoded_output, rep
+
 def main(): 
     args = parse_args()
     client = create_openai_client(args)
@@ -175,43 +218,32 @@ def main():
     print("*Loaded from", TESTSET_PATH)
 
     model_name = args.gen_model_name
+    MAX_LINES = args.max_lines
 
     try_times = MAX_TRIAL
     outputs = []
     rep_tot, gen_tot = 0, 0
-    for index, d in tqdm(df.iterrows()):
-        if d["label"] == 1: # Human written texts
-            continue
-        seq = d["sequence"]
-        prompt = get_prompt(seq)
-                
-        for idx in range(MAX_TRIAL):
-            ans = call_openai_model(client, model_name, prompt, args.top_p, args.temp)
 
-            # 你之前的逻辑：gpt-4 用 exp_truncate，其它用 truncate
-            if model_name.startswith("gpt-4"):
-                decoded_output = exp_truncate(prompt.strip() + " " + ans, 110)
-            else:
-                decoded_output = truncate(prompt.strip() + " " + ans, 110)
+    tasks = [(idx, row) for idx, row in df.iterrows() if row["label"] != 1]
 
-            token_num = count_tokens(decoded_output)
-            print(f"*Attempt {idx}, #token {token_num}: {decoded_output[:80]}...")
+    with ThreadPoolExecutor(max_workers=MAX_LINES) as executor:
+        future_to_idx = {
+            executor.submit(process_one_row, idx, row, client, args, model_name): idx
+            for idx, row in tasks
+        }
 
-            if token_num in range(70, 121):
-                df.at[index, "sequence"] = decoded_output
-                break
+        for future in tqdm(as_completed(future_to_idx), total=len(future_to_idx)):
+            idx, decoded_output, rep = future.result()
+            df.at[idx, "sequence"] = decoded_output
 
-            if idx == MAX_TRIAL - 1:
-                print("Token num not in range after max trials:", token_num)
-                df.at[index, "sequence"] = "<blank text>"
-        gen_tot += 1
-        rep = evaluate_text(decoded_output)
-        if rep:
-            print(f"***Repeating {rep} times***")
-            rep_tot += rep
-            print(f"===Repeating tot {rep_tot/gen_tot}={rep_tot}/{gen_tot} times===")
-        
-        df.to_csv(out_path, sep = "|", index = None)
+            if df.at[idx, "label"] != 1:
+                gen_tot += 1
+                if rep:
+                    rep_tot += rep
+                    print(f"===Repeating tot {rep_tot/gen_tot}={rep_tot}/{gen_tot} times===")
+
+
+    df.to_csv(out_path, sep = "|", index = None)
     print("Writing csv file to " + out_path)
 
 if __name__ == "__main__":
