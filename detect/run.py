@@ -878,19 +878,19 @@ if __name__ == '__main__':
     DEVICE = "cuda"
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--dataset', type=str, default="multi") 
-    parser.add_argument('--dataset_key', type=str, default="news_gptj_t1.5") 
+    parser.add_argument('--dataset', type=str, default="multi") #数据集目录
+    parser.add_argument('--dataset_key', type=str, default="news_glm-4-flash-t1.0") #数据集的key 
     parser.add_argument('--pct_words_masked', 
                         type=float, 
                         default=0.3) # pct masked is actually pct_words_masked * (span_length / (span_length + 2 * buffer_size))
     parser.add_argument('--span_length', type=int, default=2)
-    parser.add_argument('--n_samples', type=int, default=500, help="number of dataset examples (per label)")
+    parser.add_argument('--n_samples', type=int, default=100, help="number of dataset examples (per label)")
     parser.add_argument('--n_perturbation_list', type=str, default="1,10")
     parser.add_argument('--n_perturbation_rounds', type=int, default=1)
-    parser.add_argument('--base_model_name', type=str, default="gpt-j")
-    parser.add_argument('--generate_model_name', type=str, default="gptj")
+    parser.add_argument('--base_model_name', type=str, default="gpt2") #使用超小模型
+    parser.add_argument('--generate_model_name', type=str, default="glm-4-flash")
     parser.add_argument('--scoring_model_name', type=str, default="")
-    parser.add_argument('--mask_filling_model_name', type=str, default="t5-3b")
+    parser.add_argument('--mask_filling_model_name', type=str, default="t5-small") #使用超小模型
     parser.add_argument('--batch_size', type=int, default=50)
     parser.add_argument('--chunk_size', type=int, default=5)
     parser.add_argument('--n_similarity_samples', type=int, default=20)
@@ -916,7 +916,7 @@ if __name__ == '__main__':
     parser.add_argument('--gpu_id', 
                         type=str, default="0")
     parser.add_argument('--do_attack', 
-                        type=str, default=True)
+                        type=str, default=False)
     parser.add_argument('--attack_method', 
                         type=str, default='dipper')
     parser.add_argument('--attack_args', 
